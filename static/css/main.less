@@ -1,7 +1,32 @@
 @grey: #f5f5f5;
 @dark-grey: #4a4a4a;
 @darker-grey: #363636;
-@primary: #00d1b2;
+@orangegold: #CE952E;
+@tealblue: #85B3CC;
+@navyblue: #000E2F;
+@blue: #004369;
+@primary: @blue;
+
+.hero.is-primary {
+  background-color: @primary;
+}
+
+.menu-list a.is-active {
+  background-color: @primary;
+}
+
+.menu-list a:hover {
+  color: @tealblue;
+}
+
+a.nav-item.is-tab.is-active, a.nav-item.is-tab:hover {
+  border-bottom-color: @tealblue;
+  color: @primary;
+}
+
+a, .card-content a h3 {
+  color: @tealblue;
+}
 
 article .section {
   p, ul, ol, li {
