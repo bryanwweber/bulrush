@@ -10,8 +10,12 @@
           </h1>
           {% include 'article_infos.html' %}
           <div class="section">
-            {{ article.content }}
-            {% include 'comments.html' %}
+            {% if article.has_summary %}
+              {{ article.summary }}
+            {% else %}
+              {{ article.content }}
+              {% include 'comments.html' %}
+            {% endif %}
           </div>
         </article>
       </aside>
