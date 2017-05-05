@@ -64,7 +64,7 @@
       {% if DISPLAY_CATEGORIES_ON_MENU %}
         {% for cat, null in categories|reverse %}
           <a class="nav-item is-tab {% if cat == category %}is-active{% endif %}"
-             href="{{ SITEURL }}/{{ cat.url }}">{{ cat }}</a>
+             href="{{ SITEURL }}/{{ cat.url }}">{{ cat|title }}</a>
         {% endfor %}
       {% endif %}
     </div>
