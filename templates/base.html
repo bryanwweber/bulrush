@@ -53,6 +53,14 @@
       {% for title, link in MENUITEMS|reverse %}
         <a class="nav-item is-tab" href="{{ link }}">{{ title }}</a>
       {% endfor %}
+      {% if DISPLAY_PAGES_ON_MENU and pages %}
+        {% for pg in pages %}
+          {% if not pg.source_path.endswith('home.md') %}
+          <a class="nav-item is-tab {% if pg == page %}is-active{% endif %}"
+             href="{{ SITEURL }}/{{ pg.url }}">{{ pg.title|title }}</a>
+             {% endif %}
+         {% endfor %}
+      {% endif %}
       {% if DISPLAY_CATEGORIES_ON_MENU %}
         {% for cat, null in categories|reverse %}
           <a class="nav-item is-tab {% if cat == category %}is-active{% endif %}"
@@ -72,18 +80,9 @@
 
     <div class="column is-one-quarter-desktop is-one-third-tablet is-hidden-print">
       <aside class="menu">
-        {% if (pages and DISPLAY_PAGES_ON_MENU) or FEED_ALL_ATOM or FEED_ALL_RSS %}
+        {% if FEED_ALL_ATOM or FEED_ALL_RSS %}
           <p class="menu-label">other pages</p>
           <ul class="menu-list">
-            {% if DISPLAY_PAGES_ON_MENU %}
-              {% for pg in pages %}
-                <li><a {% if pg == page %}class="is-active"{% endif %}
-                       href="{{ SITEURL }}/{{ pg.url }}">
-                  <span class="icon is-small"><i class="fa fa-book"></i></span>
-                  <span class="link-text">{{ pg.title }}</span>
-                </a></li>
-              {% endfor %}
-            {% endif %}
             {% if FEED_ALL_ATOM %}
               <li><a href="{{ FEED_DOMAIN }}/{{ FEED_ALL_ATOM }}"
                      type="application/atom+xml" rel="alternate">
