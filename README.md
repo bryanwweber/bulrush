@@ -26,6 +26,9 @@ wasted space.
  - [x] **Custom styling** - additional CSS files can be included to customise
 the default styling.
 
+ - [x] **Service integrations** - including Disqus, GitHub, Google Analytics
+and MailChimp.
+
 Additional Screenshots
 ----------------------
 
@@ -53,6 +56,7 @@ your `pelicanconf.py`:
 | `GITHUB_URL` | Enables the "Fork me on GitHub" ribbon. |
 | `GOOGLE_ANALYTICS` | Set to `‘UA-XXXX-YYYY’` to activate Google Analytics. |
 | `LINKS` | A list of tuples `('Title', 'URL')` for links to appear in the "blogroll" section of the sidebar. |
+| `MAILCHIMP` | Configure to activate a [MailChimp][20] sign-up form; see details below. |
 | `MENUITEMS` | A list of tuples `('Title', 'URL')` for items to appear in the tabbed navigation. |
 | `SITESUBTITLE` | A subtitle to appear in the header. |
 | `SOCIAL` | A list of tuples `('Title', 'URL')` to appear in the "social" section of the sidebar. |
@@ -63,9 +67,40 @@ categories are shown in the tabbed navigation with any `MENUITEMS`. If
 `DISPLAY_PAGES_ON_MENU` is omitted or set explicitly to `True`, they are listed
 in the sidebar with any `SOCIAL` or other `LINKS`.
 
+### Social Links
+
 Appropriate icons are provided in the sidebar for a range of sites in the
 `SOCIAL` link list. Have a look in [`social.html`][17] to see which titles this
 applies to.
+
+### MailChimp Configuration
+
+If you're using [MailChimp][20] to handle a mailing list for your blog, you
+can configure a subscription form in the sidebar. You need to set three values
+to enable this, which you can get from [the signup form creator][21]. Simply
+look for the form action:
+
+```html
+<form action="//user.region.list-manage.com/subscribe/post?u=abc123&amp;id=def456" ...
+```
+
+and extract the relevant sections:
+
+```python
+MAILCHIMP = dict(
+    domain='user.region.list-manage.com',
+    user_id='abc123',
+    list_id='def456',
+    validation=True,  # enable jQuery validation
+)
+```
+
+If you set `validation=False` (or leave it out entirely) you will reduce the
+page load (as it won't need 140KB of JavaScript) but won't get inline form
+submission or email validation.
+
+You can also add `rewards_url`, providing your unique [MonkeyRewards][19] URL,
+to enable a *"Powered by MailChimp"* link.
 
 Custom Styling
 --------------
@@ -130,7 +165,8 @@ Here are few current users of Bulrush (or modified versions of it):
  - [Simon Says](https://simonsays.neocities.org/)
  - [CodeRobot](http://coderobot.downley.net/)
  - [chair6.net](http://chair6.net/)
- - [Numbers and Things](http://ryanarichmond.com/)
+ - [Just Numbers and Things](http://justnumbersandthings.com/)
+ - [بلاگ باهم](https://baaham.net/blog/) (in Persian!)
 
 If you'd like to be featured here (or are and would prefer not to be), feel
 free to submit a [pull request][18].
@@ -153,3 +189,6 @@ free to submit a [pull request][18].
   [16]: http://lesscss.org/
   [17]: https://github.com/textbook/bulrush/blob/master/templates/social.html
   [18]: https://help.github.com/articles/about-pull-requests/
+  [19]: http://kb.mailchimp.com/accounts/billing/add-or-remove-monkeyrewards
+  [20]: http://eepurl.com/cNv6Rb
+  [21]: http://kb.mailchimp.com/lists/signup-forms/add-a-signup-form-to-your-website
