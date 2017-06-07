@@ -15,6 +15,11 @@
           'vimeo', 'youtube'
         ] %}
           <i class="fa fa-{{ title|lower }} fa-fw"></i>
+        {% elif title|lower in [
+            'mendeley', 'orcid', 'zotero', 'arxiv', 'figshare',
+            'impactstory', 'overleaf',
+            ] %}
+          <i class="ai ai-{{ title|lower }} fa-fw"></i>
         {% elif title|lower == 'facebook' %}
           <i class="fa fa-facebook-official fa-fw"></i>
         {% elif title|lower == 'google+' %}
@@ -23,16 +28,10 @@
           <i class="fa fa-lastfm fa-fw"></i>
         {% elif title|lower == 'stack overflow' %}
           <i class="fa fa-stack-overflow fa-fw"></i>
-        {% elif title|lower == 'mendeley' %}
-          <i class="ai ai-mendeley fa-fw"></i>
         {% elif title|lower == 'academia.edu' %}
           <i class="ai ai-academia fa-fw"></i>
-        {% elif title|lower == 'orcid' %}
-          <i class="ai ai-orcid fa-fw"></i>
         {% elif title|lower == 'google scholar' %}
           <i class="ai ai-google-scholar fa-fw"></i>
-        {% elif title|lower == 'zotero' %}
-          <i class="ai ai-zotero fa-fw"></i>
         {% else %}
           <i class="fa fa-globe fa-fw"></i>
         {% endif %}
