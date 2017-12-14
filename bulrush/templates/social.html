@@ -32,6 +32,8 @@
           <i class="ai ai-academia fa-fw"></i>
         {% elif title|lower == 'google scholar' %}
           <i class="ai ai-google-scholar fa-fw"></i>
+        {% elif link.startswith('mailto:') %}
+          <i class="fa fa-envelope fa-fw"></i>
         {% else %}
           <i class="fa fa-globe fa-fw"></i>
         {% endif %}

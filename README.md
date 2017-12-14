@@ -29,6 +29,65 @@ the default styling.
  - [x] **Service integrations** - including Disqus, GitHub, Google Analytics
 and MailChimp.
 
+ - [x] **PyPI package available** - so it can be `pip install`-ed.
+
+Installation
+------------
+
+Bulrush is available via the [Python Package Index][22], so you can install it
+with:
+
+```bash
+pip install bulrush
+```
+
+The main exports from the module are:
+
+ - `PATH`: the path to the theme;
+ - `FILTERS`: the additional Jinja filters used by the theme; and
+ - `ENVIRONMENT`: the Jinja environment required by the theme.
+
+You can use them in your `pelicanconf.py` as follows:
+
+```python
+import bulrush
+
+THEME = bulrush.PATH
+JINJA_ENVIRONMENT = bulrush.ENVIRONMENT
+JINJA_FILTERS = bulrush.FILTERS
+```
+
+### Other Requirements
+
+The main stylesheet is provided in [Less][16] format, so you will need the Less
+compiler (`lessc`). An easy way to install this is:
+
+```bash
+npm install -g less
+```
+
+You also need to make the appropriate Pelican plugin, [`assets`][15], available.
+One way of achieving this is to make the `pelican-plugin` repository a submodule
+of your site, then you can add to your `pelicanconf.py`:
+
+```python
+PLUGIN_PATHS = ['pelican-plugins']
+PLUGINS = ['assets']
+```
+
+### Alternative
+
+If you don't want to install the theme from PyPI you can simply give Pelican a
+relative path to the inner `bulrush/` directory. For example, add `bulrush` as
+a submodule and set:
+
+```python
+THEME = 'bulrush/bulrush'
+```
+
+In this case you will need to configure the environment and filters yourself
+and ensure that `webassets` *is* installed from PyPI.
+
 Additional Screenshots
 ----------------------
 
@@ -55,6 +114,7 @@ your `pelicanconf.py`:
 | `DISQUS_SITENAME` | Enables Disqus comments. Note that you should set up the full Comment Count Link, as no additional text is applied. |
 | `GITHUB_URL` | Enables the "Fork me on GitHub" ribbon. |
 | `GOOGLE_ANALYTICS` | Set to `‘UA-XXXX-YYYY’` to activate Google Analytics. |
+| `LICENSE` | A string or dictionary describing the license for the site; see details below. |
 | `LINKS` | A list of tuples `('Title', 'URL')` for links to appear in the "blogroll" section of the sidebar. |
 | `MAILCHIMP` | Configure to activate a [MailChimp][20] sign-up form; see details below. |
 | `MENUITEMS` | A list of tuples `('Title', 'URL')` for items to appear in the tabbed navigation. |
@@ -71,7 +131,13 @@ in the sidebar with any `SOCIAL` or other `LINKS`.
 
 Appropriate icons are provided in the sidebar for a range of sites in the
 `SOCIAL` link list. Have a look in [`social.html`][17] to see which titles this
-applies to.
+applies to. If none of the sites are a match, then:
+
+ - if the second, URL element in the tuple starts with `'mailto:'`, an envelope
+   icon is used; otherwise
+ - a globe icon is used.
+
+ ![Screenshot - Social icons in sidebar][24]
 
 ### MailChimp Configuration
 
@@ -102,6 +168,24 @@ submission or email validation.
 You can also add `rewards_url`, providing your unique [MonkeyRewards][19] URL,
 to enable a *"Powered by MailChimp"* link.
 
+### License Settings
+
+You can provide one of two options to specify the license for your content:
+
+ - License name (`str`): The name of the license to display. Unless otherwise
+   specified, a default icon ([`file-text-o`][23]) will be used and the entry
+   will link to the current page.
+
+   Creative Commons license names (e.g. `'CC BY-SA 4.0'`) are automatically
+   recognised and an appropriate icon and link are generated.
+
+ - License definition (`dict`): A dictionary specifying the `name`, `url` and
+   optional `icon` (must be a Font Awesome icon name, default is
+   [`file-text-o`][23]).
+
+The license details will be displayed at the bottom of the sidebar on every
+page.
+
 Custom Styling
 --------------
 
@@ -118,41 +202,6 @@ STATIC_PATHS = [
 EXTRA_PATH_METADATA = {
     'extra/custom.css': {'path': 'custom.css'},
     ...
-}
-```
-
-Requirements
-------------
-
-This theme requires an additional Python dependency, [`webassets`][9], which can
-be added to your project with:
-
-```bash
-pip install webassets
-```
-
-The main stylesheet is provided in [Less][16] format, so you will need the Less
-compiler (`lessc`). An easy way to install this is:
-
-```bash
-npm install -g less
-```
-
-You also need to make the appropriate Pelican plugin, [`assets`][15], available.
-One way of achieving this is to make the `pelican-plugin` repository a submodule
-of your site, then you can add to your `pelicanconf.py`:
-
-```python
-PLUGIN_PATHS = ['pelican-plugins']
-PLUGINS = ['assets']
-```
-
-It also requires two Jinja plugins, `webassets` and [the `with` statement][8].
-To implement this, I have the following in my `pelicanconf.py`:
-
-```python
-JINJA_ENVIRONMENT = {
-    'extensions': ['webassets.ext.jinja2.AssetsExtension', 'jinja2.ext.with_'],
 }
 ```
 
@@ -192,3 +241,6 @@ free to submit a [pull request][18].
   [19]: http://kb.mailchimp.com/accounts/billing/add-or-remove-monkeyrewards
   [20]: http://eepurl.com/cNv6Rb
   [21]: http://kb.mailchimp.com/lists/signup-forms/add-a-signup-form-to-your-website
+  [22]: https://pypi.python.org/pypi/bulrush
+  [23]: http://fontawesome.io/icon/file-text-o/
+  [24]: ./screenshot-social.png
