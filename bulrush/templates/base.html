@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width">
   <title>{% block title %}{{ SITENAME }}{% endblock %}</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.1/css/bulma.min.css">
-  {% assets filters="less,yui_css", output="css/main.%(version)s.css", "css/main.less" %}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
+  {% assets output="css/main.%(version)s.css", "css/main.css" %}
     <link rel="stylesheet" href="{{ SITEURL }}/{{ ASSET_URL }}">
   {% endassets %}
   <style media="print">.is-hidden-print{display:none !important}</style>
@@ -33,10 +33,10 @@
   </div>
 </header>
 
-<nav class="nav has-shadow is-hidden-print">
+<nav class="navbar has-shadow is-hidden-print">
   <div class="container">
-    <div class="nav-center"></div>
-    <span id="navToggle" class="nav-toggle">
+    <div class="navbar-center"></div>
+    <span id="navToggle" class="navbar-burger">
       <span></span>
       <span></span>
       <span></span>
@@ -92,7 +92,7 @@
           </ul>
         {% endif %}
         {% if LINKS %}
-          <p class="menu-label">Links</p>
+          <p class="menu-label">{{ LINKS_WIDGET_NAME or "Links" }}</p>
           <ul class="menu-list">
             {% for name, link in LINKS %}
               <li><a href="{{ link }}">
@@ -102,7 +102,7 @@
             {% endfor %}
           </ul>
         {% endif %}
-        {% if SOCIAL %}
+        {% if SOCIAL or FEED_ALL_ATOM or FEED_ALL_RSS %}
           {% include 'social.html' %}
         {% endif %}
         {% if LICENSE %}
@@ -117,12 +117,14 @@
 <footer class="footer">
   <div class="container has-text-centered">
     {% if SITESUBTITLE %} <p class="subtitle">{{ SITESUBTITLE }}</p>{% endif %}
-    <p><a href="https://github.com/textbook/bulrush">Bulrush</a> theme for
-        <a href="https://blog.getpelican.com/">Pelican</a>
-      | <span class="icon is-small"><i class="fa fa-html5"></i></span> HTML 5
-      | <span class="icon is-small"><i class="fa fa-css3"></i></span> CSS 3
-      | <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/deed.en_US"><span class="icon is-small"><i class="fa fa-creative-commons"></i></span> Some Rights Reserved</a>
-    </p>
+    <div class="credits">
+      <p><a href="https://github.com/textbook/bulrush">Bulrush</a> theme for
+          <a href="https://blog.getpelican.com/">Pelican</a>
+        | <span class="icon is-small"><i class="fa fa-html5"></i></span> HTML 5
+        | <span class="icon is-small"><i class="fa fa-css3"></i></span> CSS 3
+        | <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/deed.en_US"><span class="icon is-small"><i class="fa fa-creative-commons"></i></span> Some Rights Reserved</a>
+      </p>
+    </div>
   </div>
   {% include 'github.html' %}
 </footer>
@@ -133,10 +135,10 @@
   document.getElementById('navToggle').addEventListener('click', function () {
     var nav = document.getElementById('navMenu');
     var className = nav.getAttribute('class');
-    if (className == 'nav-right nav-menu') {
-      nav.className = 'nav-right nav-menu is-active';
+    if (className == 'navbar-menu') {
+      nav.className = 'navbar-menu is-active';
     } else {
-      nav.className = 'nav-right nav-menu';
+      nav.className = 'navbar-menu';
     }
   });
 </script>

@@ -59,21 +59,17 @@ JINJA_FILTERS = bulrush.FILTERS
 
 ### Other Requirements
 
-The main stylesheet is provided in [Less][16] format, so you will need the Less
-compiler (`lessc`). An easy way to install this is:
-
-```bash
-npm install -g less
-```
-
-You also need to make the appropriate Pelican plugin, [`assets`][15], available.
-One way of achieving this is to make the `pelican-plugin` repository a submodule
-of your site, then you can add to your `pelicanconf.py`:
+You need to make the appropriate Pelican plugin, [`assets`][15], available. One
+way of achieving this is to make the `pelican-plugin` repository a submodule of
+your site, then you can add to your `pelicanconf.py`:
 
 ```python
 PLUGIN_PATHS = ['pelican-plugins']
 PLUGINS = ['assets']
 ```
+
+**Note**: referencing the Pelican plugins in this way may have implications for
+the license of your project. See https://github.com/textbook/bulrush/issues/17.
 
 ### Alternative
 
@@ -213,9 +209,7 @@ Here are few current users of Bulrush (or modified versions of it):
  - [textbook](http://blog.jonrshar.pe/)
  - [Simon Says](https://simonsays.neocities.org/)
  - [CodeRobot](http://coderobot.downley.net/)
- - [chair6.net](http://chair6.net/)
- - [Just Numbers and Things](http://justnumbersandthings.com/)
- - [بلاگ باهم](https://baaham.net/blog/) (in Persian!)
+ - [Small Data](https://smalldata.dev/about.html)
 
 If you'd like to be featured here (or are and would prefer not to be), feel
 free to submit a [pull request][18].
@@ -235,7 +229,6 @@ free to submit a [pull request][18].
   [13]: ./screenshot-1440px.png
   [14]: http://docs.getpelican.com/en/3.6.3/settings.html#basic-settings
   [15]: https://github.com/getpelican/pelican-plugins/tree/master/assets
-  [16]: http://lesscss.org/
   [17]: https://github.com/textbook/bulrush/blob/master/templates/social.html
   [18]: https://help.github.com/articles/about-pull-requests/
   [19]: http://kb.mailchimp.com/accounts/billing/add-or-remove-monkeyrewards
